@@ -1,0 +1,56 @@
+#cloud-config
+
+## This can sometimes cause a long wait
+package_update: true
+package_upgrade: true
+
+packages:
+ - "unattended-upgrades"
+ - "apt-transport-https"
+ - "obfs4proxy"
+ - "jq"
+
+write_files:
+
+- owner: root:root
+  permissions: '0744'
+  path: /root/tor-config.sh
+  content: |
+    ${tor_config}
+    
+- permissions: '0744'
+  path: /root/update-tor-config.sh
+  content: |
+    ${update_tor_config}
+
+- owner: root:root
+  path: /etc/cron.d/update_tor_config
+  content: |
+    1 * * * * root env CONTACT_INFO="${operator_contact_info}" bash /root/update-tor-config.sh
+
+
+runcmd:
+ # Auto update and reboot
+ - echo 'Unattended-Upgrade::Automatic-Reboot "true";' >> /etc/apt/apt.conf.d/20auto-upgrades
+ - echo 'Unattended-Upgrade::Automatic-Reboot-WithUsers "true";' >> /etc/apt/apt.conf.d/20auto-upgrades
+
+ # Tor setup
+ - gpg --keyserver keyserver.ubuntu.com --recv A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89
+ - gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | apt-key add -
+ - echo "deb http://deb.torproject.org/torproject.org/ `lsb_release -sc` main" >> /etc/apt/sources.list.d/tor.list
+ - apt-get update
+ - apt-get install -y tor
+ - RELAY_NICKNAME="${relay_nickname}" 
+    RELAY_TYPE="${relay_type}" 
+    RELAY_PORT="${relay_port}" 
+    RELAY_BRIDGE_PORT="${relay_bridge_port}" 
+    RELAY_BANDWIDTH_BURST="${relay_bandwidth_burst}"
+    RELAY_BANDWIDTH_RATE="${relay_bandwidth_rate}"
+    CONTACT_INFO="${operator_contact_info}"
+    bash /root/tor-config.sh
+ - systemctl enable tor
+ - systemctl restart tor
+
+ # Firewal setup
+ - ufw allow ${relay_port}/tcp
+ - ufw allow ${relay_bridge_port}/tcp
