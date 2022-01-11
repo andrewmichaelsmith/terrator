@@ -76,8 +76,8 @@ At present, terrator assumes an Ubuntu OS and will almost certainly fail with an
 
 ### Per provider config
 
-| Name                | `digitialocean`                                                                                                    | `hetzner`                                                                      | `vultr`                                  |
-|---------------------|--------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|------------------------------------------|
+| Name                | `digitialocean`  | `hetzner`  | `vultr`  |
+|---------------------|------------------|-----------------------|------------------------------------------|
 | `provider_os`       | [link](https://docs.digitalocean.com/reference/api/api-reference/#operation/get_images_list)  (requires API auth)  | [link](https://docs.hetzner.cloud/#images-get-all-images)  (requires API auth) | [link](https://api.vultr.com/v2/os)      |
 | `provider_location` | [link](https://docs.digitalocean.com/reference/api/api-reference/#operation/list_all_regions)  (requires API auth) | [link](https://docs.hetzner.com/cloud/general/locations/)                      | [link](https://api.vultr.com/v2/regions) |
 
