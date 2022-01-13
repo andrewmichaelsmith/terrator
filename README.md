@@ -25,7 +25,7 @@ locals {
       relay_bandwidth_rate  = "5000 KB"
       relay_bandwidth_burst = "10000 KB"
       relay_port            = 9001
-      relay_bridge_port     = 9002
+      relay_bridge_port     = -1
     },
   ]
 }
