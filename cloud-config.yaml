@@ -33,6 +33,14 @@ runcmd:
  # Auto update and reboot
  - echo 'Unattended-Upgrade::Automatic-Reboot "true";' >> /etc/apt/apt.conf.d/20auto-upgrades
  - echo 'Unattended-Upgrade::Automatic-Reboot-WithUsers "true";' >> /etc/apt/apt.conf.d/20auto-upgrades
+ - echo 'Unattended-Upgrade::Allowed-Origins {' > /etc/apt/apt.conf.d/50unattended-upgrades
+ - echo '"${distro_id}:${distro_codename}";' >> /etc/apt/apt.conf.d/50unattended-upgrades
+ - echo '"${distro_id}:${distro_codename}-security";' >> /etc/apt/apt.conf.d/50unattended-upgrades
+ - echo '"${distro_id}ESMApps:${distro_codename}-apps-security";' >> /etc/apt/apt.conf.d/50unattended-upgrades
+ - echo '"${distro_id}ESM:${distro_codename}-infra-security";' >> /etc/apt/apt.conf.d/50unattended-upgrades
+ - echo '"${distro_id}:${distro_codename}-updates";' >> /etc/apt/apt.conf.d/50unattended-upgrades
+ - echo '};' >> /etc/apt/apt.conf.d/50unattended-upgrades
+
 
  # Tor setup
  - gpg --keyserver keyserver.ubuntu.com --recv A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89
