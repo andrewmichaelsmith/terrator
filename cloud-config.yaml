@@ -37,7 +37,7 @@ runcmd:
  - echo '"$${distro_id}:$${distro_codename}";' >> /etc/apt/apt.conf.d/50unattended-upgrades
  - echo '"$${distro_id}:$${distro_codename}-security";' >> /etc/apt/apt.conf.d/50unattended-upgrades
  - echo '"$${distro_id}ESMApps:$${distro_codename}-apps-security";' >> /etc/apt/apt.conf.d/50unattended-upgrades
- - echo '"$${distro_id}ESM:${distro_codename}-infra-security";' >> /etc/apt/apt.conf.d/50unattended-upgrades
+ - echo '"$${distro_id}ESM:$${distro_codename}-infra-security";' >> /etc/apt/apt.conf.d/50unattended-upgrades
  - echo '"$${distro_id}:$${distro_codename}-updates";' >> /etc/apt/apt.conf.d/50unattended-upgrades
  - echo '};' >> /etc/apt/apt.conf.d/50unattended-upgrades
 
